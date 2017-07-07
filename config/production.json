@@ -1,0 +1,13 @@
+{
+    "port":8000,
+    "is_debug":false,
+    "db_path":"mysql://root:123456@127.0.0.1/mini",
+    "xsrf_cookies":true,
+    "cookie_secret":"mini",
+    "login_url":"/login",
+    "template_path":"templates",
+    "static_path":"static",
+    "logger_name":"app.log",
+    "sep_logger":true
+}
+	
