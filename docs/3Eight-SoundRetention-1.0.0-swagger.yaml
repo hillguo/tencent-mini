@@ -1,0 +1,473 @@
+swagger: '2.0'
+info:
+  description: 'SoundRetention'
+  version: 1.0.0
+  title: Sound Retention
+# host: petstore.swagger.io
+# basePath: /v2
+tags:
+  - name: story
+    description: Everything about location
+  - name: song
+    description: Access to song orders
+  - name: user
+    description: Operations about user
+# schemes:
+#   - http
+paths:
+  /story:
+    post:
+      tags:
+        - story
+      summary: 留故事
+      description: 点击留时，前端发送歌曲ID，故事
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/story'
+      responses:
+        '405':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'  
+
+  /story/{storyId}/up:
+    post:
+      tags:
+        - story
+      summary: 对故事点赞
+      description: 对故事点赞后，前端发送用户名，故事ID，点赞标志
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/story_up'
+        - in: path
+          name: storyId
+          required: true
+          type: string
+          description: story id
+      responses:
+        '405':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'  
+            
+            
+  /story/{storyId}/comment/{commentId}/up:
+    post:
+      tags:
+        - story
+      summary: 对评论点赞
+      description: 对评论点赞后，前端发送故事ID，点赞标志
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/comment_up'
+        - in: path
+          name: storyId
+          required: true
+          type: string
+        - in: path
+          name: commentId
+          required: true
+          type: string
+      responses:
+        '405':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'  
+  /story/{storyId}/comment:
+    get:
+      tags:
+        - story
+      summary: 获取故事信息
+      description: 点击故事后，前端发送故事ID，查看评论标志，后端返回所有的评论内容，评论ID，评论点攒数
+      produces:
+        - application/json
+      parameters:
+        - name: storyId
+          in: path
+          description: 故事ID
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/commentlist'
+        '400':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'
+    post:
+      tags:
+        - story
+      summary: 评论
+      description: 发送评论后，前端发送用户名，故事ID，评论内容
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/comment'
+      responses:
+        '405':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'          
+    
+   
+  /song/near:
+    get:
+      tags:
+        - song
+      summary: 返回附近的歌曲相关信息
+      description: 点击"听"时，前端发送位置，后端返回附近的歌曲url，位置，ID
+      produces:
+        - application/json
+      parameters:
+        - name: longitude
+          in: query
+          description: 用户当前所在的经度
+          required: true
+          type: string
+        - name: latitude
+          in: query
+          description: 用户当前所在的纬度
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/lcsonglist'
+        '400':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'
+
+  /song/{songId}/story:
+    get:
+      tags:
+        - song
+      summary: 获取歌曲对应的故事信息
+      description: '寻找歌曲时点击了某首歌，前端发送歌曲ID，后端返回所有的故事内容，故事ID，故事点赞数，留下故事的用户名，故事的创作时间'
+      produces:
+        - application/json
+      parameters:
+        - name: songId
+          in: path
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/storylist'
+        '400':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'
+            
+  /song:
+    get:
+      tags:
+        - song
+      summary: 获取歌曲
+      description: flag=0:用户点击推荐音乐时，前端发送推荐标志，后端返回推荐歌曲的url，歌曲ID ; flag=1:主界面点击留时，前端发送最近听过标志，后端返回最近听过的歌曲的url，歌曲ID
+      produces:
+        - application/json
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          type: string
+        - name: flag
+          in: query
+          required: true
+          type: string 
+          description: 0：表示获取推荐歌曲 1：表示获取最近听过的歌曲
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/recommended_songs'
+        '400':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'
+  
+          
+  /user/register:
+    post:
+      tags:
+        - user
+      summary: 注册
+      description: ''
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: formData
+          description: The user name for register
+          required: true
+          type: string
+        - name: password
+          in: formData
+          description: The password for register
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+        '400':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'
+          
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: 登录
+      description: ''
+      operationId: loginUser
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: formData
+          description: The user name for login
+          required: true
+          type: string
+        - name: password
+          in: formData
+          description: The password for login in clear text
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+        '400':
+          description: failed
+          schema:
+            $ref: '#/definitions/state'
+          
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+    flow: implicit
+    scopes:
+      'write:pets': modify pets in your account
+      'read:pets': read your pets
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+    
+definitions:
+  lcsonginfo:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      url:
+        type: string
+      longitude:
+        type: string
+      latitude:
+        type: string
+        
+  lcsonglist:
+    type: array
+    items:
+      $ref: '#/definitions/lcsonginfo'
+      
+  state:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int64
+      errinfo:
+        type: string
+        
+  storylist:
+    type: array
+    items:
+      $ref: '#/definitions/storyinfo'
+            
+  storyinfo:
+        type: object
+        properties:
+          story_id:
+            type: integer
+            format: int64
+          content:
+            type: string
+          thumbs_up_nmb:
+            type: integer
+            format: int64
+            description: '点赞数'
+          owner_name:
+            type: string
+          owner_id:
+            type: integer
+            format: int64
+          time:
+            type: string
+            format: data-time    
+            
+  commentinfo:
+        type: object
+        properties:
+          comment_id:
+            type: integer
+            format: int64
+          content:
+            type: string
+          thumbs_up_nmb:
+            type: integer
+            format: int64
+            description: '点赞数'
+          owner_name:
+            type: string
+          owner_id:
+            type: integer
+            format: int64
+          time:
+            type: string
+            format: data-time          
+  commentlist:
+    type: array
+    items:
+      $ref: '#/definitions/commentinfo'
+  
+  comment:
+        type: object
+        properties:
+          content:
+            type: string
+          owner_name:
+            type: string
+          owner_id:
+            type: integer
+            format: int64
+  
+  comment_up:
+        type: object
+        properties:
+          up_flag:
+            type: integer
+            format: int64
+            description: 点赞标志         
+          owner_name:
+            type: string
+          owner_id:
+            type: integer
+            format: int64
+            
+  story_up:
+        type: object
+        properties:
+          up_flag:
+            type: integer
+            format: int64
+            description: 点赞标志
+          owner_name:
+            type: string
+          owner_id:
+            type: integer
+            format: int64
+  story:
+        type: object
+        properties:
+          song_id:
+            type: integer
+            format: int64
+          content:
+            type: string
+          owner_name:
+            type: string
+          owner_id:
+            type: integer
+            format: int64
+          longitude:
+            type: string
+          latitude:
+            type: string
+ 
+  songinfo:
+    type: object
+    properties:
+      song_id:
+        type: integer
+        format: int64
+      song_url:
+        type: string
+
+        
+  recommended_songs:
+    type: array
+    items:
+      $ref: '#/definitions/songinfo'
+   
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /3Eight/SoundRetention/api/v1
+schemes:
+ - https
+ - http
+ 
