@@ -2,7 +2,7 @@
     "port":8000,
     "is_debug":true,
     "db_path":"mysql://root:123456@127.0.0.1/mini",
-    "xsrf_cookies":true,
+    "xsrf_cookies":false,
     "cookie_secret":"mini",
     "login_url":"/login",
     "template_path":"templates",
