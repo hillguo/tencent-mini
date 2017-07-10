@@ -3,15 +3,7 @@ import os
 import binascii
 import tornado.web
 
-from sqlalchemy import create_engine
-from sqlalchemy import Column,text, Integer, String, DateTime, Boolean
-from sqlalchemy.orm import scoped_session,sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 
-from sqlalchemy.orm.exc import MultipleResultsFound
-from sqlalchemy.orm.exc import NoResultFound
-
-from Tools.Tools import *
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -49,28 +41,3 @@ class BaseHandler(tornado.web.RequestHandler):
             if user_id == self.__TOKEN_LIST[token]:
                 return True
         return False
-            
-
-
-
-
-#返回附近的歌曲信息
-class SongNearHandler(tornado.web.RequestHandler):
-    def get(self):
-        latitude = self.get_argument("latitude")
-        longitude = self.get_argument("longtitude")
-
-        result = []
-        rows = getsonginfo()
-        for row in rows:
-            if(10 > math.fabs(calculateLineDistance(location(longitude, latitude), location(row["longitude"], row["latitude"])))):
-                result.append(row)
-        self.finish(json.dump(result))
-
-
-
-
-
-
-
-
