@@ -30,7 +30,7 @@ class Application(tornado.web.Application):
                 )
         super(Application,self).__init__(handlers,**settings)
         engine=create_engine(options.db_path,convert_unicode=True,echo=options.debug)
-        #database.init_db.init_db(engine)
+        database.init_db.init_db(engine)
         self.db=scoped_session(sessionmaker(bind=engine))
 
 if __name__ == "__main__":
@@ -38,5 +38,5 @@ if __name__ == "__main__":
     app = Application()
     app.listen(options.port)
     consoleStr = "server is running, listen port:(0),runningEnv:{1}".format(options.port,options.env)
-    logging.info(consoleStr)
+    print(consoleStr)
     tornado.ioloop.IOLoop.instance().start()
