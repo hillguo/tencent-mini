@@ -1,7 +1,6 @@
 import json
 import os
 import binascii
-
 import tornado.web
 
 from sqlalchemy import create_engine
@@ -12,9 +11,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import MultipleResultsFound
 from sqlalchemy.orm.exc import NoResultFound
 
-
-
 from model.model import User
+from Tools.Tools import *
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -102,6 +100,19 @@ class UserInfoHandler(BaseHandler):
                 res["user_id"]=user.user_qq_id
                 res["user_name"]=user.user_name
                 self.write(res)
+
+#返回附近的歌曲信息
+class SongNearHandler(tornado.web.RequestHandler):
+    def get(self):
+        latitude = self.get_argument("latitude")
+        longitude = self.get_argument("longtitude")
+
+        result = []
+        rows = getsonginfo()
+        for row in rows:
+            if(10 > math.fabs(calculateLineDistance(location(longitude, latitude), location(row["longitude"], row["latitude"])))):
+                result.append(row)
+        self.finish(json.dump(result))
 
 
 
