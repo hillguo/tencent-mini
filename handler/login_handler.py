@@ -4,7 +4,7 @@ from sqlalchemy import Column,text, Integer, String, DateTime, Boolean
 from sqlalchemy.orm.exc import MultipleResultsFound
 from sqlalchemy.orm.exc import NoResultFound
 
-from model.user_model import User
+from model.model import User
 from handler.base_handler import BaseHandler          
 
 class IndexHandler(BaseHandler):
@@ -20,9 +20,9 @@ class LoginHandler(BaseHandler):
         if user_id == None :
             self.write_miss_argument()
             return None 
-        user=self.db.query(User).filter(User.user_qq_id==user_id).first()
+        user=self.db.query(User).filter(User.user_id==user_id).first()
         if user == None:
-            user = User(user_qq_id=user_id)
+            user = User(user_id=user_id)
             self.db.add(user)
             self.db.commit()
         new_token = self.generate_token()
