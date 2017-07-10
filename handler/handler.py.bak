@@ -50,7 +50,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
 
 		
-class StoryHandler(BaseHandler)
+class StoryHandler(BaseHandler):
     def post(self):
 	    postdata = self.request.body.decode('utf-8')
 		postdata = json.loads(postdata)
@@ -78,7 +78,7 @@ class StoryHandler(BaseHandler)
 			self.write(err_encode)
 		db.close()
 			
-class PraiseHandler(BaseHandler)
+class PraiseHandler(BaseHandler):
     def post(self, storyid):
 	    postdata = self.request.body.decode('uft-8')
 		postdata = json.loads(postdata)
@@ -141,7 +141,7 @@ class PraiseHandler(BaseHandler)
 			self.write(err_encode)
 		db.close()
 		
-class CommentHandler(BaseHandler)
+class CommentHandler(BaseHandler):
     def post(self, storyid):
 	    db = pymysql.connect("595f58f641420.gz.cdb.myqcloud.com", "cdb_outerroot", "mini123456", "tingwen", 5880, use_unicode=True, charset="utf8")
         cursor = db.cursor()
