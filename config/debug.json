@@ -1,7 +1,7 @@
 {
     "port":8000,
     "is_debug":true,
-    "db_path":"mysql://root:123456@127.0.0.1/mini",
+    "db_path":"mysql+pymysql://root:123456@127.0.0.1/mini",
     "xsrf_cookies":false,
     "cookie_secret":"mini",
     "login_url":"/login",
