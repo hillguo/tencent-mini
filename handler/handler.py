@@ -8,7 +8,6 @@ import json
 from sqlalchemy.orm.exc import MultipleResultsFound
 from sqlalchemy.orm.exc import NoResultFound
 
-from model.model import User
 from Tools.Tools import *
 
 
@@ -49,12 +48,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return False
             
 
-class IndexHandler(BaseHandler):
-    def get(self):
-        sql=text("show tables")
-        res=self.db.execute(sql).fetchall()
-        print(res)
-        self.write("hello")
+
 		
 class StoryHandler(BaseHandler)
     def post(self):
@@ -78,7 +72,7 @@ class StoryHandler(BaseHandler)
 			self.write(info_encode)
 		except:
 		    db.rollback()
-			err = {'code': 1, 'errinfo': '´æÈë¹ÊÊÂÊ§°Ü'}
+			err = {'code': 1, 'errinfo': 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½'}
 			err_json = json.dumps(err)
 			err_encode = err_json.encode('utf-8')
 			self.write(err_encode)
@@ -99,7 +93,7 @@ class PraiseHandler(BaseHandler)
 		try:
 		    cursor.execute(sql)
 		except:
-			err = {'code': 1, 'errinfo': '²éÑ¯ÓÃ»§ÊÇ·ñÏ²»¶¹ı¸ÃÊ×¸èÇúÊ±Ê§°Ü'}
+			err = {'code': 1, 'errinfo': 'ï¿½ï¿½Ñ¯ï¿½Ã»ï¿½ï¿½Ç·ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¸ï¿½ï¿½ï¿½Ê±Ê§ï¿½ï¿½'}
 			err_json = json.dumps(err)
 			err_encode = err_json.encode('utf-8')
 			self.write(err_encode)
@@ -107,7 +101,7 @@ class PraiseHandler(BaseHandler)
 			return
 		results = cursor.fetchall()
 		if len(results) != 0:
-		    err = {'code': 2, 'errinfo': 'ÒÑ¾­µã¹ıÔŞÁË'}
+		    err = {'code': 2, 'errinfo': 'ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'}
 			err_json = json.dumps(err)
 			err_encode = err_json.encode('utf-8')
 			self.write(err_encode)
@@ -122,7 +116,7 @@ class PraiseHandler(BaseHandler)
 			db.commit()
 		except:
 		    db.rollback()
-			err = {'code': 3, 'errinfo': '"ÓÃ»§Ï²»¶¹ÊÊÂ"ĞÅÏ¢´æÈëÊ§°Ü'}
+			err = {'code': 3, 'errinfo': '"ï¿½Ã»ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½'}
 			err_json = json.dumps(err)
 			err_encode = err_json.encode('utf-8')
 			self.write(err_encode)
@@ -141,7 +135,7 @@ class PraiseHandler(BaseHandler)
 			self.write(info_encode)
 		except:
 		    db.rollback()
-			err = {'code': 4, 'errinfo': '¸üĞÂµãÔŞÊıÊ§°Ü'}
+			err = {'code': 4, 'errinfo': 'ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½'}
 			err_json = json.dumps(err)
 			err_encode = err_json.encode('utf-8')
 			self.write(err_encode)
@@ -154,7 +148,7 @@ class CommentHandler(BaseHandler)
         cursor.execute("SET NAMES utf8")
         cursor.execute("SET CHARACTER SET utf8")
         cursor.execute("SET character_set_connection=utf8")
-		#»ñÈ¡ÆÀÂÛID£¬ÆÀÂÛÄÚÈİ£¬µãÔŞÊı£¬Ê±¼ä
+		#ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	    sql = '''
 		    SELECT commentID, content, praisenum, time FROM comment WHERE storyid = {0}
 		'''.format(storyid)
@@ -172,7 +166,7 @@ class CommentHandler(BaseHandler)
 			self.write(storyinfo_encode)
 		except:
 		    db.rollback()
-			err = {'code': 1, 'errinfo': '»ñÈ¡ÆÀÂÛÊ§°Ü'}
+			err = {'code': 1, 'errinfo': 'ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½'}
 			err_json = json.dumps(err)
 			err_encode = err_json.encode('utf-8')
 			self.write(err_encode)
@@ -180,47 +174,7 @@ class CommentHandler(BaseHandler)
         self.write("hello")
 
 
-class LoginHandler(BaseHandler):
-    def post(self):
-        user_id = self.get_argument("user_id",None)
-        if user_id == None :
-            self.write_miss_argument()
-            return None 
-        user=self.db.query(User).filter(User.user_qq_id==user_id).first()
-        if user == None:
-            user = User(user_qq_id=user_id)
-            self.db.add(user)
-            self.db.commit()
-        new_token = self.generate_token()
-        self.set_token(new_token,user_id)
-        res ={}
-        res["code"] = 0
-        res["token"] = new_token
-        res["msg"] = "login success !"
-        self.write(res)
 
-class UserInfoHandler(BaseHandler):
-    '''ä¾‹å­ï¼š1. æ‰€æœ‰å¤„ç†ç±»ç»§æ‰¿ BaseHandle
-             2. get å¤„ç†get è¯·æ±‚ , post æ–¹æ³• å¤„ç† post è¯·æ±‚
-             3. self.get_argument("arg_name",None) è·å–ä¼ æ¥çš„å‚æ•°ï¼Œæ²¡æœ‰è¿”å›None
-             4. æ‰€æœ‰ æœ‰å¯èƒ½è¢« è¶Šæƒ çš„æ“ä½œï¼Œéƒ½éœ€è¦ valid_user() // ä¼šéªŒè¯ userid å’Œtoken æ˜¯å¦ä¸€è‡´
-             5. è¿”å›å€¼å‡ä¸ºjson
-             6. ä¾‹å­ï¼š æ ¹æ®è¯·æ±‚çš„ user_id è¿”å›ä¸ªäººä¿¡æ¯. (ç´§ä½œå‚è€ƒï¼Œä¸ä¸¥ç¦)
-    '''
-    def post(self):
-        if not self.valid_user():
-            res ={}
-            res["code"] = -1
-            res["msg"] = "please login again!"
-            self.write(res)
-        else:
-            user_id = self.get_argument("user_id",None)
-            user = self.db.query(User).filter(User.user_qq_id == user_id).first()
-            if user :
-                res ={}
-                res["user_id"]=user.user_qq_id
-                res["user_name"]=user.user_name
-                self.write(res)
 
 #è¿”å›é™„è¿‘çš„æ­Œæ›²ä¿¡æ¯
 class SongNearHandler(tornado.web.RequestHandler):
