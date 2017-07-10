@@ -17,18 +17,45 @@ class IndexHandler(BaseHandler):
 class LoginHandler(BaseHandler):
     def post(self):
         user_id = self.get_argument("user_id",None)
+        user_name = self.get_argument("user_name",None)
+        user_avatar = self.get_argument("user_avatar",None)
         if user_id == None :
-            self.write_miss_argument()
+            res ={}
+            res["code"] = -1
+            res["errinfo"] = "参数错误"
+            self.write(res)
             return None 
         user=self.db.query(User).filter(User.user_id==user_id).first()
         if user == None:
-            user = User(user_id=user_id)
+            user = User(user_id=user_id,user_name=user_name,user_avatar=user_avatar)
             self.db.add(user)
             self.db.commit()
         new_token = self.generate_token()
         self.set_token(new_token,user_id)
         res ={}
         res["code"] = 0
-        res["token"] = new_token
-        res["msg"] = "login success !"
+        data ={}
+        data["token"]=new_token
+        res["data"] = data
+        res["errinfo"] = "login success !"
+        self.write(res)
+
+class UserInfoHandler(BaseHandler):
+    def post(self):
+        if not self.valid_user() :
+            res={}
+            res["code"] = -1
+            res["errinfo"] = "不合法用户"
+            self.write(res)
+            return None
+        user_id = self.get_argument("user_id",None)
+        user = self.db.query(User).filter(User.user_id==user_id).first()
+        data={}
+        data["user_id"]=user.user_id
+        data["user_name"]=user.user_name
+        data["user_avatar"]=user.user_avatar
+        res ={}
+        res["code"]=0
+        res["data"]=data
+        res["errinfo"]="success!"
         self.write(res)
