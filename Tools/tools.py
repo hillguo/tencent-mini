@@ -1,5 +1,4 @@
 import math
-import pymysql
 
 
 #位置信息    longitude 为经度  latitude为纬度
@@ -47,34 +46,3 @@ def calculateLineDistance(llocation, rlocation):
     except Exception:
         print(Exception)
         return 0.0
-
-def getsonginfo():
-    db = pymysql.connect("595f58f641420.gz.cdb.myqcloud.com", "cdb_outerroot", "mini123456", "tingwen", 5880,
-                         use_unicode=True, charset="utf8")
-    cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
-    cursor.execute("SET NAMES utf8")
-    cursor.execute("SET CHARACTER SET utf8")
-    cursor.execute("SET character_set_connection=utf8")
-    try:
-        cursor.execute("select songID,longitude, latitude from story")
-        rows = cursor.fetchall()
-        return rows
-    except:
-        print("db failed!")
-        return []
-    db.close()
-
-def test(lg,lt):
-    result = []
-    rows = getsonginfo()
-
-    for row in rows:
-        print(row["longitude"])
-        llocation = location(lg, lt)
-        rlocation = location(row["longitude"], row["latitude"])
-        if (10> math.fabs(calculateLineDistance(llocation, rlocation))):
-            result.append(row)
-    print(result)
-
-if __name__ == "__main__":
-    test(113.94029, 22.546065)
