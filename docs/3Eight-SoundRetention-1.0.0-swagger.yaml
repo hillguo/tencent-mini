@@ -59,8 +59,8 @@ paths:
           type: string
           description: story id
       responses:
-        '405':
-          description: failed
+        '200':
+          description: '错误码说明: 1: 查询用户是否喜欢过该首歌曲时失败; 2: 已经点过赞了; 3: 用户喜欢故事信息存入失败; 4: 更新点赞数失败'
           schema:
             $ref: '#/definitions/state'  
             
@@ -90,8 +90,8 @@ paths:
           required: true
           type: string
       responses:
-        '405':
-          description: failed
+        '200':
+          description: 'success'
           schema:
             $ref: '#/definitions/state'  
   /story/{storyId}/comment:
@@ -114,10 +114,6 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/commentlist'
-        '400':
-          description: failed
-          schema:
-            $ref: '#/definitions/state'
     post:
       tags:
         - story
@@ -134,8 +130,8 @@ paths:
           schema:
             $ref: '#/definitions/comment'
       responses:
-        '405':
-          description: failed
+        '200':
+          description: 'success'
           schema:
             $ref: '#/definitions/state'          
     
@@ -164,10 +160,6 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/lcsonglist'
-        '400':
-          description: failed
-          schema:
-            $ref: '#/definitions/state'
 
   /song/{songId}/story:
     get:
@@ -188,10 +180,6 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/storylist'
-        '400':
-          description: failed
-          schema:
-            $ref: '#/definitions/state'
             
   /song:
     get:
@@ -216,12 +204,7 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/recommended_songs'
-        '400':
-          description: failed
-          schema:
-            $ref: '#/definitions/state'
   
-          
   /user/register:
     post:
       tags:
@@ -331,9 +314,17 @@ definitions:
         type: string
         
   lcsonglist:
-    type: array
-    items:
-      $ref: '#/definitions/lcsonginfo'
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int64
+      errinfo:
+        type: string
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/lcsonginfo'
       
   state:
     type: object
@@ -345,9 +336,17 @@ definitions:
         type: string
         
   storylist:
-    type: array
-    items:
-      $ref: '#/definitions/storyinfo'
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int64
+      errinfo:
+        type: string
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/storyinfo'
             
   storyinfo:
         type: object
@@ -391,9 +390,17 @@ definitions:
             type: string
             format: data-time          
   commentlist:
-    type: array
-    items:
-      $ref: '#/definitions/commentinfo'
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int64
+      errinfo:
+        type: string
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/commentinfo'
   
   comment:
         type: object
@@ -426,8 +433,6 @@ definitions:
             type: integer
             format: int64
             description: 点赞标志
-          owner_name:
-            type: string
           owner_id:
             type: integer
             format: int64
@@ -439,14 +444,14 @@ definitions:
             format: int64
           content:
             type: string
-          owner_name:
-            type: string
           owner_id:
             type: integer
             format: int64
           longitude:
             type: string
           latitude:
+            type: string
+          created:
             type: string
  
   songinfo:
@@ -458,7 +463,7 @@ definitions:
       song_url:
         type: string
 
-        
+
   recommended_songs:
     type: array
     items:
