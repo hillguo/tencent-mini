@@ -19,7 +19,7 @@ class StoryHandler(BaseHandler):
         try:
             cursor.execute(sql)
             db.commit()
-            info = {'code': 0}
+            info = {'code': 0, 'errinfo': 'OK'}
             info_json = json.dumps(info)
             info_encode = info_json.encode('utf-8')
             self.write(info_encode)
@@ -83,7 +83,7 @@ class PraiseHandler(BaseHandler):
         try:
             cursor.execute(sql)
             db.commit()
-            info = {'code': 0}
+            info = {'code': 0, 'errinfo': 'OK'}
             info_json = json.dumps(info)
             info_encode = info_json.encode('utf-8')
             self.write(info_encode)
@@ -124,7 +124,7 @@ class CommentHandler(BaseHandler):
         for row in results:
             singlestoryinfo	= {'commentid': row[0], 'content': row[1], 'praisenum': row[2], 'time': row[3]}
             allstoryinfo.append(singlestoryinfo)
-        info = {'code': 0, 'data': allstoryinfo}
+        info = {'code': 0, 'data': allstoryinfo, 'errinfo': 'OK'}
         storyinfo_json = json.dumps(info)
         storyinfo_encode = storyinfo_json.encode('utf-8')
         self.write(storyinfo_encode)
