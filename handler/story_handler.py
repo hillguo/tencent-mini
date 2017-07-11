@@ -4,7 +4,7 @@ import pymysql
 
 class StoryHandler(BaseHandler):
     def post(self):
-	    "ÁôÏÂ¹ÊÊÂĞÅÏ¢"
+	    "ç•™ä¸‹æ•…äº‹ä¿¡æ¯"
         postdata = self.request.body.decode('utf-8')
         postdata = json.loads(postdata)
         db = pymysql.connect("595f58f641420.gz.cdb.myqcloud.com", "cdb_outerroot", "mini123456", "tingwen", 5880, use_unicode=True, charset="utf8")
@@ -25,7 +25,7 @@ class StoryHandler(BaseHandler):
             self.write(info_encode)
         except:
             db.rollback()
-            err = {'code': 1, 'errinfo': '´æÈë¹ÊÊÂÊ§°Ü'}
+            err = {'code': 1, 'errinfo': 'å­˜å…¥æ•…äº‹å¤±è´¥'}
             err_json = json.dumps(err)
             err_encode = err_json.encode('utf-8')
             self.write(err_encode)
@@ -33,7 +33,7 @@ class StoryHandler(BaseHandler):
 			
 class PraiseHandler(BaseHandler):
     def post(self, storyid):
-	    "¸ø¹ÊÊÂµãÔŞ"
+	    "ç»™æ•…äº‹ç‚¹èµ"
         postdata = self.request.body.decode('utf-8')
         postdata = json.loads(postdata)
         db = pymysql.connect("595f58f641420.gz.cdb.myqcloud.com", "cdb_outerroot", "mini123456", "tingwen", 5880, use_unicode=True, charset="utf8")
@@ -47,7 +47,7 @@ class PraiseHandler(BaseHandler):
         try:
             cursor.execute(sql)
         except:
-            err = {'code': 1, 'errinfo': '²éÑ¯ÓÃ»§ÊÇ·ñÏ²»¶¹ı¸ÃÊ×¸èÇúÊ±Ê§°Ü'}
+            err = {'code': 1, 'errinfo': 'æŸ¥è¯¢ç”¨æˆ·æ˜¯å¦å–œæ¬¢è¿‡è¯¥é¦–æ­Œæ›²æ—¶å¤±è´¥'}
             err_json = json.dumps(err)
             err_encode = err_json.encode('utf-8')
             self.write(err_encode)
@@ -55,7 +55,7 @@ class PraiseHandler(BaseHandler):
             return
         results = cursor.fetchall()
         if len(results) != 0:
-            err = {'code': 2, 'errinfo': 'ÒÑ¾­µã¹ıÔŞÁË'}
+            err = {'code': 2, 'errinfo': 'å·²ç»ç‚¹è¿‡èµäº†'}
             err_json = json.dumps(err)
             err_encode = err_json.encode('utf-8')
             self.write(err_encode)
@@ -70,7 +70,7 @@ class PraiseHandler(BaseHandler):
             db.commit()
         except:
             db.rollback()
-            err = {'code': 3, 'errinfo': '"ÓÃ»§Ï²»¶¹ÊÊÂ"ĞÅÏ¢´æÈëÊ§°Ü'}
+            err = {'code': 3, 'errinfo': '"ç”¨æˆ·å–œæ¬¢æ•…äº‹"ä¿¡æ¯å­˜å…¥å¤±è´¥'}
             err_json = json.dumps(err)
             err_encode = err_json.encode('utf-8')
             self.write(err_encode)
@@ -89,7 +89,7 @@ class PraiseHandler(BaseHandler):
             self.write(info_encode)
         except:
             db.rollback()
-            err = {'code': 4, 'errinfo': '¸üĞÂµãÔŞÊıÊ§°Ü'}
+            err = {'code': 4, 'errinfo': 'æ›´æ–°ç‚¹èµæ•°å¤±è´¥'}
             err_json = json.dumps(err)
             err_encode = err_json.encode('utf-8')
             self.write(err_encode)
@@ -97,13 +97,13 @@ class PraiseHandler(BaseHandler):
 		
 class CommentHandler(BaseHandler):
     def post(self, storyid):
-		"»ñÈ¡¹ÊÊÂµÄÆÀÂÛµÈĞÅÏ¢"
+		"è·å–æ•…äº‹çš„è¯„è®ºç­‰ä¿¡æ¯"
         db = pymysql.connect("595f58f641420.gz.cdb.myqcloud.com", "cdb_outerroot", "mini123456", "tingwen", 5880, use_unicode=True, charset="utf8")
         cursor = db.cursor()
         cursor.execute("SET NAMES utf8")
         cursor.execute("SET CHARACTER SET utf8")
         cursor.execute("SET character_set_connection=utf8")
-		#»ñÈ¡¹ÊÊÂID£¬ÆÀÂÛÄÚÈİ£¬µãÔŞÊı£¬Ê±¼ä
+		#è·å–æ•…äº‹IDï¼Œè¯„è®ºå†…å®¹ï¼Œç‚¹èµæ•°ï¼Œæ—¶é—´
         sql = '''
 		    SELECT commentID, content, praisenum, time FROM comment WHERE storyid = {0}
 		'''.format(storyid)
@@ -112,7 +112,7 @@ class CommentHandler(BaseHandler):
             db.commit()
         except:
             db.rollback()
-            err = {'code': 1, 'errinfo': '»ñÈ¡ÆÀÂÛÊ§°Ü'}
+            err = {'code': 1, 'errinfo': 'è·å–è¯„è®ºå¤±è´¥'}
             err_json = json.dumps(err)
             err_encode = err_json.encode('utf-8')
             self.write(err_encode)
