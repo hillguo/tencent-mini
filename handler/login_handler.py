@@ -1,4 +1,5 @@
 import json
+import traceback
 
 from sqlalchemy import Column,text, Integer, String, DateTime, Boolean
 from sqlalchemy.orm.exc import MultipleResultsFound
@@ -25,11 +26,20 @@ class LoginHandler(BaseHandler):
             res["errinfo"] = "参数错误"
             self.write(res)
             return None 
-        user=self.db.query(User).filter(User.user_id==user_id).first()
-        if user == None:
-            user = User(user_id=user_id,user_name=user_name,user_avatar=user_avatar)
-            self.db.add(user)
-            self.db.commit()
+        try:
+            user=self.db.query(User).filter(User.user_id==user_id).first()
+            if user == None:
+                user = User(user_id=user_id,user_name=user_name,user_avatar=user_avatar)
+                self.db.add(user)
+                self.db.commit()
+        except BaseException as e:
+            msg = traceback.format_exc()
+            print(msg)
+            res={}
+            res["code"]= -1
+            res["errinfo"]= "参数错误"
+            self.write(res)
+            return None
         new_token = self.generate_token()
         self.set_token(new_token,user_id)
         res ={}

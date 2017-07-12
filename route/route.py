@@ -10,6 +10,6 @@ routes = [
         url(r"/story/([0-9]+)/up", PraiseHandler, name='praisestory'),
         url(r"/story/([0-9]+)/commentlist", CommentListHandler, name='getcommentlist'),
         url(r"/userinfo",UserInfoHandler),
-        url(r"/song", SongNearHandler),
+        url(r"/song/near", SongNearHandler),
         url(r"/song/story", SongStoryHandler)
         ]

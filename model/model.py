@@ -1,13 +1,16 @@
-
+# coding: utf-8
+from sqlalchemy import Column, Date, Float, ForeignKey, Integer, String, Table
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, text
+
 
 Base = declarative_base()
+metadata = Base.metadata
+
 
 class User(Base):
-    __tablename__ = "user"
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer)
-    user_name = Column(String(20))
-    user_avatar = Column(String(100))
-    
+    __tablename__ = 'user'
+
+    user_id = Column(String(50), primary_key=True)
+    user_name = Column(String(50))
+    user_avatar = Column(String(200))
