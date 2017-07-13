@@ -9,8 +9,9 @@ class SongNearHandler(BaseHandler):
         #if(not self.valid_user()):
         latitude = self.get_argument("latitude")
         longitude = self.get_argument("longitude")
-        rep = {"code" :0, "data":None}
 
+        #rep = {"code" :0, "data":None,"errinfo":"success"}
+        rep = {}
         try:
             sql = "select songID,longitude, latitude from story"
             rows = self.db.execute(sql).fetchall()
@@ -23,6 +24,7 @@ class SongNearHandler(BaseHandler):
                     tmp["song_id"] = row["songID"]
                     result.append(tmp)
             rep["data"] = result
+            rep["errinfo"] = "success!!"
         except:
             rep["code"] = -1
             rep["errinfo"] = "something error"

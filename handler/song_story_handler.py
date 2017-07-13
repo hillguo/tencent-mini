@@ -7,8 +7,8 @@ class SongStoryHandler(BaseHandler):
     def get(self):
         #if(not self.valid_user()):
         songid= self.get_argument("songid")
-        rep = {"code": 0, "data": None}
 
+        rep = {}
         try:
             sql = "select * from story where songID = " + str(songid)
             rows = self.db.execute(sql).fetchall()
@@ -22,6 +22,8 @@ class SongStoryHandler(BaseHandler):
                 tmp["user_id"] = row["userID"]
                 result.append(tmp)
             rep["data"] = result
+            rep["code"] = 0
+            rep["errinfo"] = "success !!"
         except:
             rep["code"] = -1
             rep["errinfo"] = "something error"
