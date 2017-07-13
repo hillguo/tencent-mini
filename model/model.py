@@ -2,17 +2,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, text, Float, DateTime, ForeignKey
 
 Base = declarative_base()
+metadata = Base.metadata
+
 
 class User(Base):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer)
+    user_id = Column(Integer, primary_key=True)
     user_name = Column(String(20))
     user_avatar = Column(String(100))
 
 class Comment(Base):
     __tablename__ = 'comment'
-    id = Column(Integer, primary_key=True)
+    comment_id = Column(Integer, primary_key=True)
     content = Column(String(140))
     story_id = Column(Integer, ForeignKey('story.id'))
     up = Column(Integer)
@@ -20,7 +21,7 @@ class Comment(Base):
 
 class Story(Base):
     __tablename__ = 'story'
-    id = Column(Integer, primary_key=True)
+    story_id = Column(Integer, primary_key=True)
     content = Column(String(140))
     song_id = Column(Integer, ForeignKey('song.id'))
     up = Column(Integer)
@@ -31,7 +32,7 @@ class Story(Base):
 
 class Song(Base):
     __tablename__ = 'song'
-    id = Column(Integer, primary_key=True)
+    song_id = Column(Integer, primary_key=True)
     song_link = Column(String(100))
     lrc_link = Column(String(100))
     song_pic_small = Column(String(100))
