@@ -37,6 +37,8 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')  
     app = Application()
     app.listen(options.port)
-    consoleStr = "server is running, listen port:{0},runningEnv:{1}".format(options.port,options.env)
-    print(consoleStr)
+    SETUPINFO = '''
+    server is running, listen port:{0},runningEnv:{1}
+    '''.format(options.port,options.env)
+    print(SETUPINFO)
     tornado.ioloop.IOLoop.instance().start()
