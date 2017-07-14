@@ -13,7 +13,7 @@ class SongStoryHandler(BaseHandler):
             rep["code"] = 3
             rep["errinfo"] = "请求参数有问题"
             logging.error(e)
-            self.finish(json.dumps(rep))
+            self.finish(json.dumps(rep ,ensure_ascii=False))
 
         try:
             sql = "select * from story where song_id = " + str(song_id)
@@ -22,7 +22,7 @@ class SongStoryHandler(BaseHandler):
             rep["code"] = 1
             rep["errinfo"] = "数据查询失败"
             logging.error(e)
-            self.finish(json.dumps(rep))
+            self.finish(json.dumps(rep ,ensure_ascii=False))
 
         try:
             result = []
@@ -46,6 +46,6 @@ class SongStoryHandler(BaseHandler):
             rep["code"] = 2
             rep["errinfo"] = "数据库没有对应的字段"
             logging.error(e)
-            self.finish(json.dumps(rep))
+            self.finish(json.dumps(rep ,ensure_ascii=False))
 
-        self.finish(json.dumps(rep))
+        self.finish(json.dumps(rep ,ensure_ascii=False))
