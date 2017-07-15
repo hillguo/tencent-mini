@@ -10,7 +10,7 @@ class StoryHandler(BaseHandler):
 
         content = body["content"]
         song_id = body["song_id"]
-        longitude = body["longtitude"]
+        longitude = body["longitude"]
         latitude = body["latitude"]
         user_id = body["user_id"]
         sql = '''
@@ -39,8 +39,8 @@ class PraiseHandler(BaseHandler):
         postdata = json.loads(postdata)
 
         sql = '''
-            SELECT * FROM likestory WHERE user_id = "{0}"
-        '''.format(postdata['user_id'])
+            SELECT * FROM likestory WHERE user_id = "{0}" AND story_id = {1}
+        '''.format(postdata['user_id'], story_id)
         try:
             results = self.db.execute(sql).fetchall()
         except Exception as e:
