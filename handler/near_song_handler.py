@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import json
 from handler.base_handler import BaseHandler
 from Tools.tools import *
@@ -17,7 +19,7 @@ class SongNearHandler(BaseHandler):
             rep["code"] = 3
             rep["errinfo"] = "请求参数有问题"
             logging.error(e)
-            self.finish(json.dumps(rep))
+            self.finish(json.dumps(rep ,ensure_ascii=False))
 
         try:
             sql = "select story_id,song_id,longitude, latitude from story"
@@ -26,7 +28,7 @@ class SongNearHandler(BaseHandler):
             rep["code"] = 1
             rep["errinfo"] = "数据库查询失败"
             logging.error(e)
-            self.finish(json.dumps(rep))
+            self.finish(json.dumps(rep ,ensure_ascii=False))
 
         try:
             result = []
@@ -45,8 +47,8 @@ class SongNearHandler(BaseHandler):
             rep["code"] = 2
             rep["errinfo"] = "数据库没有对应的字段"
             logging.error(e)
-            self.finish(json.dumps(rep))
+            self.finish(json.dumps(rep ,ensure_ascii=False))
 
-        self.finish(json.dumps(rep))
+        self.finish(json.dumps(rep ,ensure_ascii=False))
 
 
