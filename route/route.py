@@ -12,8 +12,8 @@ routes = [
     url(r"/story", StoryHandler),
     url(r"/story/([0-9]+)/up", PraiseHandler),
     url(r"/story/([0-9]+)/comment", CommentHandler),
+    url(r"/song/([0-9]+)/story", SongStoryHandler),
     url(r"/userinfo", UserInfoHandler),
     url(r"/song/near", SongNearHandler),
-    url(r"/song/story", SongStoryHandler),
     url(r"/song/search", SearchHandler)
 ]
