@@ -9,14 +9,6 @@ class SongStoryHandler(BaseHandler):
         rep = {"code": 0, "errinfo": "success"}
 
         try:
-            song_id = self.get_argument("song_id")
-        except Exception as e:
-            rep["code"] = 3
-            rep["errinfo"] = "请求参数有问题"
-            logging.error(e)
-            self.finish(json.dumps(rep ,ensure_ascii=False))
-
-        try:
             rows = self.db.query(Story).filter(Story.song_id==song_id).all()
         except Exception as e:
             rep["code"] = 1
