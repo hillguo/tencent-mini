@@ -25,7 +25,7 @@ class Story(Base):
     content = Column(String(140))
     song_id = Column(Integer, ForeignKey('song.song_id'))
     up = Column(Integer)
-    user_id = Column(Integer, ForeignKey('user.song_id'))
+    user_id = Column(String, ForeignKey('user.user_id'))
     latitude = Column(Float)
     longitude = Column(Float)
     created_at = Column(DateTime)
@@ -44,3 +44,6 @@ class LikeStory(Base):
     like_id = Column(Integer, primary_key=True)
     user_id = Column(String(50), ForeignKey('user.user_id'))
     story_id = Column(Integer, ForeignKey('story.story_id'))
+
+
+

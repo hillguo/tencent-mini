@@ -5,6 +5,8 @@ from handler.song_story_handler import SongStoryHandler
 from handler.story_handler import StoryHandler, PraiseHandler
 from handler.comment_handler import CommentHandler
 from handler.search_handler import SearchHandler
+from handler.login_handler import LikeSongHandler
+from handler.login_handler import HistorySongHandler
 
 routes = [
     url(r"/login", LoginHandler),
@@ -15,5 +17,7 @@ routes = [
     url(r"/song/([0-9]+)/story", SongStoryHandler),
     url(r"/userinfo", UserInfoHandler),
     url(r"/song/near", SongNearHandler),
-    url(r"/song/search", SearchHandler)
+    url(r"/song/search", SearchHandler),
+    url(r"/likesong",LikeSongHandler),
+    url(r"/historysong",HistorySongHandler)
 ]

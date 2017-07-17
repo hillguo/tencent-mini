@@ -7,7 +7,7 @@ from model.model import Story, LikeStory
 class StoryHandler(BaseHandler):
     def post(self):
         "留下故事信息"
-        body = json.loads(self.request.body)
+        body = json.loads(self.request.body.decode())
 
         content = body["content"]
         song_id = body["song_id"]

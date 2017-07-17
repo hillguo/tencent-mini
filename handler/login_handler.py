@@ -6,6 +6,7 @@ from sqlalchemy.orm.exc import MultipleResultsFound
 from sqlalchemy.orm.exc import NoResultFound
 
 from model.model import User
+
 from handler.base_handler import BaseHandler          
 
 class IndexHandler(BaseHandler):
@@ -69,3 +70,57 @@ class UserInfoHandler(BaseHandler):
         res["data"]=data
         res["errinfo"]="success!"
         self.write(res)
+class LikeSongHandler(BaseHandler):
+    def get(self):
+        rep = {"code" :0, "errinfo":"success"}
+        try:
+            user_id = self.get_argument("user_id")
+            song_id = self.get_argument("song_id")
+        except Exception as e:
+            rep["code"] = -1;
+            rep["errinfo"] = "参数有问题"
+            self.write(rep)
+            return
+
+        try:
+
+            sql = text("select * from historysong where user_id='" + user_id + "' and song_id=" + song_id)
+            res = self.db.execute(sql).first()
+            print(res)
+            if not res:
+                sql =text("insert into historysong  (user_id,song_id) values ('"+user_id+"',"+song_id+" )" )
+                res = self.db.execute(sql)
+                self.db.commit()
+            # if not res:
+            # ls =LikeSong(user_id=user_id,song_id=song_id)
+            # self.db.add(ls)
+            #self.db.commit()
+        except Exception as e:
+            print(e)
+            rep["code"] = -2;
+            rep["errinfo"] = "数据库插入失败"
+            self.write(rep)
+            return
+
+        self.write(rep)
+
+
+class HistorySongHandler(BaseHandler):
+    def get(self):
+        res={"code":0,"data":" ","errinfo":"success"}
+        user_id=self.get_argument("user_id",None)
+
+        if user_id ==None:
+            res["code"]=-1
+            res["errinfo"]="invalid args"
+            self.write(res)
+            return
+        sql=text("select song_id from historysong where user_id='"+user_id+"'")
+        datas=self.db.execute(sql).fetchall()
+        l=[]
+        for data in datas:
+            l.append(data[0])
+        print(l)
+        res["data"]=l
+        self.write(res)
+
