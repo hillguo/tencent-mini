@@ -1,4 +1,7 @@
 import json
+
+import tornado.gen
+
 from handler.base_handler import BaseHandler
 from datetime import datetime 
 from Tools.log import logging
@@ -8,7 +11,6 @@ class StoryHandler(BaseHandler):
     def post(self):
         "留下故事信息"
         body = json.loads(self.request.body.decode())
-
         content = body["content"]
         song_id = body["song_id"]
         longitude = body["longitude"]

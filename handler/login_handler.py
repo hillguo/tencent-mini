@@ -4,10 +4,13 @@ import traceback
 from sqlalchemy import Column,text, Integer, String, DateTime, Boolean
 from sqlalchemy.orm.exc import MultipleResultsFound
 from sqlalchemy.orm.exc import NoResultFound
-
+import tornado.gen
 from model.model import User
 
 from handler.base_handler import BaseHandler          
+
+
+
 
 class IndexHandler(BaseHandler):
     def get(self):
@@ -53,7 +56,7 @@ class LoginHandler(BaseHandler):
 
 class UserInfoHandler(BaseHandler):
     def post(self):
-        if not self.valid_user() :
+        if not self.valid_user():
             res={}
             res["code"] = -1
             res["errinfo"] = "不合法用户"
@@ -70,6 +73,8 @@ class UserInfoHandler(BaseHandler):
         res["data"]=data
         res["errinfo"]="success!"
         self.write(res)
+
+
 class LikeSongHandler(BaseHandler):
     def get(self):
         rep = {"code" :0, "errinfo":"success"}
