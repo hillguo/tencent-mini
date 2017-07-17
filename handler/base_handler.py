@@ -4,11 +4,13 @@ import binascii
 import tornado.web
 
 import tornado.gen
-
+from tornado.concurrent import run_on_executor
+from concurrent.futures import ThreadPoolExecutor
 
 class BaseHandler(tornado.web.RequestHandler):
 
     __TOKEN_LIST = {}
+    executor =ThreadPoolExecutor(20)
 
     @property
     def db(self):
@@ -33,7 +35,8 @@ class BaseHandler(tornado.web.RequestHandler):
             userid = self.__TOKEN_LIST[token]
             return userid
         return None
-    
+
+    @run_on_executor
     def valid_user(self):
         token = self.get_argument("token",None)
         user_id = self.get_argument("user_id",None)

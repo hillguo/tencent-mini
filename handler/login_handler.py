@@ -55,8 +55,11 @@ class LoginHandler(BaseHandler):
         self.write(res)
 
 class UserInfoHandler(BaseHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
     def post(self):
-        if not self.valid_user():
+        val = yield self.valid_user()
+        if not val:
             res={}
             res["code"] = -1
             res["errinfo"] = "不合法用户"

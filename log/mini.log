@@ -1,48 +1,31 @@
-Mon, 17 Jul 2017 13:49:05 log.py[line:109] INFO SHOW VARIABLES LIKE 'sql_mode'
-Mon, 17 Jul 2017 13:49:05 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO SELECT DATABASE()
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO show collation where `Charset` = 'utf8' and `Collation` = 'utf8_bin'
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8) COLLATE utf8_bin AS anon_1
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO DESCRIBE `song`
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO DESCRIBE `story`
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO DESCRIBE `user`
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO DESCRIBE `comment`
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO DESCRIBE `likestory`
-Mon, 17 Jul 2017 13:49:06 log.py[line:109] INFO {}
-Mon, 17 Jul 2017 13:49:08 web.py[line:1590] ERROR Uncaught exception POST /userinfo (14.17.22.36)
-HTTPServerRequest(protocol='http', host='123.206.212.82:8000', method='POST', uri='/userinfo', version='HTTP/1.1', remote_ip='14.17.22.36', headers={'Host': '123.206.212.82:8000', 'Origin': 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarypV5lJ1k8ZfkSqN82', 'Accept-Encoding': 'gzip, deflate', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', 'Cookie': '_token="2|1:0|10:1499580914|6:_token|44:YzQ3Y2NkYTg5YjJkZDc4ZjI0ZDVhZGE4OTljNTI4MGM=|979e632019fa3ae0f734e45182ac1ffd7c292b7a315d0693b4799a394a1f092f"', 'Content-Length': '596', 'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache, max-age=259200', 'Postman-Token': '5f7955d5-b679-c4fd-8457-1cac90304c49'})
-Traceback (most recent call last):
-  File "/home/ubuntu/py3/lib/python3.5/site-packages/tornado/web.py", line 1467, in _stack_context_handle_exception
-    raise_exc_info((type, value, traceback))
-  File "<string>", line 4, in raise_exc_info
-  File "/home/ubuntu/py3/lib/python3.5/site-packages/tornado/stack_context.py", line 316, in wrapped
-    ret = fn(*args, **kwargs)
-  File "/home/ubuntu/py3/lib/python3.5/site-packages/tornado/web.py", line 1680, in future_complete
-    f.result()
-  File "/home/ubuntu/py3/lib/python3.5/site-packages/tornado/concurrent.py", line 238, in result
-    raise_exc_info(self._exc_info)
-  File "<string>", line 4, in raise_exc_info
-  File "/home/ubuntu/py3/lib/python3.5/site-packages/tornado/gen.py", line 1063, in run
-    yielded = self.gen.throw(*exc_info)
-  File "/home/ubuntu/github/mini/handler/login_handler.py", line 61, in post
-    val = yield tornado.gen.Task(self.valid_user,None)
-  File "/home/ubuntu/py3/lib/python3.5/site-packages/tornado/gen.py", line 1055, in run
-    value = future.result()
-  File "/home/ubuntu/py3/lib/python3.5/site-packages/tornado/concurrent.py", line 238, in result
-    raise_exc_info(self._exc_info)
-  File "<string>", line 4, in raise_exc_info
-  File "/home/ubuntu/py3/lib/python3.5/site-packages/tornado/gen.py", line 622, in Task
-    func(*args, callback=_argument_adapter(set_result), **kwargs)
-TypeError: valid_user() got an unexpected keyword argument 'callback'
-Mon, 17 Jul 2017 13:49:08 web.py[line:2063] ERROR 500 POST /userinfo (14.17.22.36) 4.76ms
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO SHOW VARIABLES LIKE 'sql_mode'
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO SELECT DATABASE()
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO show collation where `Charset` = 'utf8' and `Collation` = 'utf8_bin'
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8) COLLATE utf8_bin AS anon_1
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO DESCRIBE `story`
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO DESCRIBE `song`
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO DESCRIBE `likestory`
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO DESCRIBE `user`
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO DESCRIBE `comment`
+Mon, 17 Jul 2017 14:06:56 log.py[line:109] INFO {}
+Mon, 17 Jul 2017 14:07:00 web.py[line:2063] INFO 200 POST /userinfo (14.17.22.36) 1.70ms
+Mon, 17 Jul 2017 14:07:27 web.py[line:2063] WARNING 404 POST /recommend/3 (14.17.22.36) 2.10ms
+Mon, 17 Jul 2017 14:07:38 web.py[line:2063] WARNING 404 POST /recommend?user_id=2 (14.17.22.36) 0.98ms
+Mon, 17 Jul 2017 14:07:42 web.py[line:2063] WARNING 404 GET /recommend?user_id=2 (14.17.22.36) 2.02ms
+Mon, 17 Jul 2017 14:07:48 web.py[line:2063] WARNING 404 GET /recommend/3 (14.17.22.36) 0.74ms
+Mon, 17 Jul 2017 14:07:56 web.py[line:2063] WARNING 404 GET /songrecommend/3 (14.17.22.36) 0.73ms
+Mon, 17 Jul 2017 14:08:02 web.py[line:2063] INFO 200 GET /songrecommend?user_id=4 (14.17.22.36) 85.89ms
+Mon, 17 Jul 2017 14:08:20 web.py[line:2063] INFO 200 GET /abtest2/2 (14.17.22.36) 1219.88ms
+Mon, 17 Jul 2017 14:08:27 web.py[line:2063] INFO 200 GET /abtest3/2 (14.17.22.36) 1112.44ms
